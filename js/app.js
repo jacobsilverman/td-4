@@ -30,5 +30,9 @@ $(document).on('click', '.key', (e) => markButton(e.target.textContent,e));
 /* keypress listener for exceeds grade */
 $(document).on('keypress', (e) => {
     if (!game) return null;
-    if (e.keyCode>96 || e.keyCode<123) markButton(String.fromCharCode(e.keyCode),e);
+    if (e.keyCode>96 || e.keyCode<123){
+        if (!$(`.key:contains("${String.fromCharCode(e.keyCode)}")`).prop('disabled')){
+            markButton(String.fromCharCode(e.keyCode),e);
+        }
+    }
 });
