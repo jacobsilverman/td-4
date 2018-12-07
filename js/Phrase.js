@@ -1,13 +1,7 @@
 
 /* Phrase.js to create a Phrase class to handle the creation of phrases */
 
-/* Create the Phrase class in the Phrase.js file. */
-
-/* The class should include a constructor that accepts a phrase as an argument. The class should include the
- following methods: (1) addPhraseToDisplay(): this adds letter placeholders to the display when the game starts.
-  Each letter is presented by an empty box, one list item for each letter. See the example_phrase_html.txt file for an example of what the render HTML for a phrase should look like when the game starts. When the player correctly guesses a letter, the empty box is replaced with a the matched letter (see the showMatchedLetter() method below. Make sure the phrase displayed on the screen doesn't include spaces. (2) checkLetter(): checks to see if letter selected by player matches a letter in the phrase. (3) showMatchedLetter(): reveals the letter(s) on the board that matches player's selection.
- */
-
+/* helper function for addPhraseToDisplay method */
 function isLetter(input) {
     // card number must be number
     var regex = /^[a-zA-Z]+$/;
@@ -15,9 +9,10 @@ function isLetter(input) {
 }
 
 class Phrase {
-    constructor(myPhrase){
-        this.phrase = myPhrase;
+    constructor(phrase){
+        this.phrase = phrase;
     }
+    /* addPhraseToDisplay(): this adds letter placeholders to the display when the game starts. */
     addPhraseToDisplay(){
         let reducedPhraseArray = this.phrase.split('').reduce((sum, cur) => {
             if(isLetter(cur)){
@@ -32,6 +27,8 @@ class Phrase {
         reducedPhraseArray.push('</ul>','</div>');
         $('div#phrase').replaceWith(reducedPhraseArray.join(''));
     }
+
+    /* checkLetter(): checks to see if letter selected by player matches a letter in the phrase. */
     checkLetter(letter){
         return this.phrase.split('').reduce((sum,cur,i) => {
             if (cur === letter) {
@@ -40,8 +37,8 @@ class Phrase {
             return sum;
         },[]);
     }
-    showMatchedLetter(letter){
-        $(`.${letter}`).removeClass('hide');
-        $(`.${letter}`).addClass('show');
+    /* showMatchedLetter(): reveals the letter(s) on the board that matches player's selection. */
+    showMatchedLetter(key){
+        $(`.${key}`).removeClass('hide').addClass('show');
     }
 }

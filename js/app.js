@@ -1,52 +1,34 @@
 /* app.js to perform basic DOM selection, add event handlers, and to reset the game when it ends */
 
-const game = new Game();
+let game;
 
+/* resetDisplay(): this function hides the start screen overlay. */
 
-/*
-* resetDisplay(): this function hides the start screen overlay. I chose to add resets for the keys and
-* tries/lives/hearts for each game here because they involve direct DOM manipulation and I am re-using the
-* btn__reset from get started for reset. I think replacing and re-using existing buttons is better UI/UX than
-* creating new buttons.
-* */
 function resetDisplay(){
     $('div#overlay').hide();
-    $( ".key" ).each(function() {
-        if ($( this ).hasClass('chosen')){
-            $( this ).removeClass('chosen').prop('disabled',false);
-        }
-        if ($( this ).hasClass('wrong')){
-            $( this ).removeClass('wrong').prop('disabled',false);
-        }
-    });
-    $('li.tries').show();
 }
 
 /* markButton(): this function is called when a player selects a letter. It disables the button on the onscreen
- keyboard and calls the handleInteraction() method of the Game class. I don't understand why this is in app.js and
-  not in the Game */
+ keyboard and calls the handleInteraction() method of the Game class. */
 
-function markButton(){
-
+function markButton(key,e) {
+    $(`.key:contains("${key}")`).prop('disabled', true);
+    game.handleInteraction(key, e);
 }
 
-
-
-$(document).on('click', '.key', function (e) {
-    game.handleInteraction(e);
-});
-
-$(document).on('click','#btn__reset', function(e){
+/* Add an event listener to the "Start Game" button which calls the resetDisplay() function, creates a new Game
+ object, and starts the game. */
+$(document).on('click','#btn__reset',() => {
     resetDisplay();
+    game = new Game(["Dccddee", "Abba", "ffghijj"]);
     game.startGame();
 });
 
-$(document).on('keypress', function(e){
-    if(game.started === 0){
-        return null;
-    }
-    if (e.keyCode>96 || e.keyCode<123){
-        game.handleInteraction(e);
-    }
-    // else do nothing
+/* Add event listeners to each of the keyboard buttons, so that clicking a button calls the markButton() function. */
+$(document).on('click', '.key', (e) => markButton(e.target.textContent,e));
+
+/* keypress listener for exceeds grade */
+$(document).on('keypress', (e) => {
+    if (!game) return null;
+    if (e.keyCode>96 || e.keyCode<123) markButton(String.fromCharCode(e.keyCode),e);
 });
