@@ -20,7 +20,7 @@ function markButton(key,e) {
  object, and starts the game. */
 $(document).on('click','#btn__reset',() => {
     resetDisplay();
-    game = new Game(["Dccddee", "Abba", "ffghijj"]);
+    game = new Game(["Thank You", "Black Zebra", "I Love Ducks"]);
     game.startGame();
 });
 

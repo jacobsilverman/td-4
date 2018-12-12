@@ -51,10 +51,12 @@ class Game {
     gameOver(caller){
         if (caller === 'win'){
             $('h1#game-over-message').text('Congratulations you win!');
-            $('div#overlay').show().addClass('win');
+            $('div#overlay').show().addClass('win').css('background-color', '#78CF82');
+            // --color-win: #78CF82;
+            // --color-lose: #D94545;
         } else if (caller === 'lose'){
             $('h1#game-over-message').text('Game Over');
-            $('div#overlay').show().addClass('lose');
+            $('div#overlay').show().addClass('lose').css('background-color','#D94545');
         }
         //reset here for exceeds expectations
         $( ".key" ).each(function() {

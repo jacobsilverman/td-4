@@ -19,7 +19,7 @@ class Phrase {
                 sum.push('<li class=\"hide letter ' + cur.toLowerCase() + '\">'+ cur + '</li>');
             }
             if(cur.localeCompare(' ') === 0){
-                sum.push('<li class=\"hide letter space\"></li>');
+                sum.push('<li class=\"hide space\"></li>');
             }
             return sum;
         },[]);
